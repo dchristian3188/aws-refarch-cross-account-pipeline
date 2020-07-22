@@ -1,0 +1,31 @@
+﻿AWSTemplateFormatVersion: '2010-09-09'
+Description: An AWS Lambda application that calls the Lambda API.
+Resources:
+  LAMBDA:
+    Type: AWS::Lambda::Function
+    Properties:
+      Handler: lambda_function.lambda_handler
+      Runtime: python3.7
+      Code: function/.
+      Description: Sample Lambda Function
+      Timeout: 10
+      Role: !GetAtt LAMBDAROLE.Arn
+  LAMBDAROLE:
+      Type: AWS::IAM::Role
+      Properties:
+        RoleName: lambda-sample-role
+        AssumeRolePolicyDocument:
+          Version: 2012-10-17
+          Statement:
+            -
+              Effect: Allow
+              Principal:
+                Service:
+                  - lambda.amazonaws.com
+              Action:
+                - sts:AssumeRole
+        Path: /
+        ManagedPolicyArns:
+          - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+          - arn:aws:iam::aws:policy/AWSLambdaReadOnlyAccess
+          - arn:aws:iam::aws:policy/AWSXrayWriteOnlyAccess
