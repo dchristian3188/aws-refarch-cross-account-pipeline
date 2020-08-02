@@ -91,6 +91,7 @@ Resources:
               - lambda:GetFunction
               - lambda:UpdateFunctionConfiguration
               - events:* # Required for the sample lambda function to work
+              - iam:AttachRolePolicy 
               - iam:CreateRole
               - iam:CreatePolicy
               - iam:GetRole
